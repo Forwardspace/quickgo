@@ -2,12 +2,12 @@ import express, { Request, Response } from "express"
 import cors from "cors";
 import sqlite, { DatabaseSync } from "node:sqlite"
 
-import { GameState } from "./gamestate"
-
 const PORT = process.env.PORT || 8080;
 
 const app = express();
 const database = new DatabaseSync(":memory:");
+
+import { GameState } from "./GameState";
 
 app.use(express.json());
 app.use(cors());

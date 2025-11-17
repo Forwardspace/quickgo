@@ -41,6 +41,13 @@ export class GameState {
         this.lastUpdate = Date.now();
     }
 
+    static copy(old: GameState) {
+        var newGameState = new GameState(0, 0, 0);
+        Object.assign(newGameState, old);
+
+        return newGameState;
+    }
+
     static fromDbData(dbdata: Record<string, any> | undefined) : GameState | undefined {
         if (dbdata === undefined) return undefined;
 

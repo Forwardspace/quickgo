@@ -1,0 +1,30 @@
+
+.game-piece {
+    position: absolute;
+
+    border-radius: 50%;
+    filter: drop-shadow(5px 5px 10px #000000);
+    opacity: 0;
+
+    padding: 2px;
+}
+
+.white {
+    background-color: aliceblue;
+}
+
+.black {
+    background-color: black;
+}
+
+.game-piece:hover {
+    opacity: 0.25;
+}
+
+.filled {
+    opacity: 1;
+}
+
+.filled:hover {
+    opacity: 1;
+}

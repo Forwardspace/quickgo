@@ -27,16 +27,22 @@ function getOtherPlayerID(player: number, gamestate: GameState) : number | null 
     return player === gamestate.player1 ? gamestate.player2 : gamestate.player1;
 }
 
+async function makeMove(player: number, game: number, gamestate: GameState, y: number, x: number) {
+    if (isThisPlayersTurn(player, gamestate) && gamestate.executeMove(x, y)) {
+        let root = process.env.REACT_APP_BACKEND_ROOT || "http://localhost:8080";
+        await fetch(root + "/makemove/" + String(game) + "/" + String(player) + "/" + String(x) + "/" + String(y), {method: "POST"});
+    }
+}
+
 function isThisPlayersTurn(player : number, gamestate : GameState) : boolean {
     if (gamestate === null) {
         return false;
     }
 
-    let currentPlayerID = gamestate.currentPlayer === gamestate.player1 ? gamestate.player1 : gamestate.player2;
-    return currentPlayerID === player;
+    return gamestate.isPlayersTurn(player);
 }
 
-function isThisPlayerWhite(player: number, gamestate: GameState) : boolean {
+function isThisPlayerBlack(player: number, gamestate: GameState) : boolean {
     if (gamestate === null) {
         return false;
     }
@@ -61,7 +67,7 @@ export function Game() {
         <div className="game-container-bg">
             <div className="game-container">
                 <div className="game-details-container">
-                    <div className={"game-info-container " + (isThisPlayerWhite(userID, gameState)? "gi-container-white" : "gi-container-black")}>
+                    <div className={"game-info-container " + (isThisPlayerBlack(userID, gameState)? "gi-container-white" : "gi-container-black")}>
                         <h2>Game ID:</h2>
                         <h1>{gameID.toString(16)}</h1>
                     </div>
@@ -74,7 +80,15 @@ export function Game() {
                     </div>
                 </div>
                 <div className="game-board-container">
-                    <GameBoard />
+                    { gameState && (
+                        <GameBoard 
+                            boardSize={gameState.boardSize}
+                            boardState={JSON.parse(gameState.boardState)}
+                            isCurrentPlayersTurn={isThisPlayersTurn(userID, gameState)}
+                            isCurrentPlayerBlack={isThisPlayerBlack(userID, gameState)}
+                            onClickCallback={makeMove.bind(this, userID, gameID, gameState)}
+                        />
+                    )}
                 </div>
             </div>
         </div>

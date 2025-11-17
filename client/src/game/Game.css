@@ -53,13 +53,15 @@
     width: 97vh;
     height: 97vh;
 
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: center;
+
     margin-right: 10vh;
     
     background-color: #654b3a;
-    background-image:
-      repeating-linear-gradient(#000000 0 1px, transparent 1px 100%),
-      repeating-linear-gradient(90deg, #0c0c0c 0 1px, transparent 1px 100%);
-    background-size: 71px 71px;
     border-radius: 10px;
     filter: drop-shadow(5px 5px 10px #000000);
 }

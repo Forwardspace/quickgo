@@ -1,0 +1,8 @@
+.game-grid-decorative {
+    width: 90%;
+    height: 90%;
+}
+
+.game-grid-functional {
+    position: relative;
+}
